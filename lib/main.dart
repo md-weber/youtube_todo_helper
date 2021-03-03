@@ -93,7 +93,9 @@ class _MyHomePageState extends State<MyHomePage> {
                       var liveChatId =
                           responseBody["items"][0]["snippet"]["liveChatId"];
 
-                      timer = Timer(Duration(seconds: 30), () async {
+                      var seconds = 0;
+                      timer = Timer.periodic(Duration(seconds: 5), (Timer timer) async {
+                        print(seconds + 5);
                         final http.Response liveChatResponse = await client.get(
                           "https://youtube.googleapis.com/youtube/v3/liveChat/messages?liveChatId=$liveChatId&part=snippet&key=$apiKey",
                           headers: headers,
@@ -118,6 +120,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 .toList();
                           });
                         } else {
+                          print("cancel");
                           timer.cancel();
                         }
                       });
